@@ -1,5 +1,6 @@
 package com.lostinkaos.android.notesquirrel;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -7,11 +8,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+
+import java.io.FileOutputStream;
 
 
 public class MainActivity extends ActionBarActivity {
 
     public static final String DEBUGTAG = "NOTESQUIRREL";
+    public static final String TEXTFILE = "notesquirrel.txt";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +32,18 @@ public class MainActivity extends ActionBarActivity {
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d(DEBUGTAG, "Save button clicked");
+
+                EditText editText = (EditText) findViewById( R.id.text );
+
+                String text = editText.getText().toString();
+
+                try {
+                    FileOutputStream fos = openFileOutput(TEXTFILE, Context.MODE_PRIVATE);
+                    fos.write( text.getBytes() );
+                    fos.close();
+                } catch (Exception e) {
+                    Log.d(DEBUGTAG, "Unable to save file");
+                }
             }
         });
     }

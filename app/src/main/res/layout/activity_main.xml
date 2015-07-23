@@ -6,6 +6,8 @@
     tools:context=".MainActivity">
 
     <EditText
+        android:maxLength="400"
+        android:id="@+id/text"
         android:gravity="top"
         android:hint="Enter your text here."
         android:layout_width="match_parent"
