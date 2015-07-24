@@ -9,14 +9,14 @@
         android:maxLength="400"
         android:id="@+id/text"
         android:gravity="top"
-        android:hint="Enter your text here."
+        android:hint="@string/edit_text_hint"
         android:layout_width="match_parent"
         android:layout_height="0dip"
         android:layout_weight="1"  />
 
     <Button
         android:id="@+id/save"
-        android:text="Save"
+        android:text="@string/save"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
