@@ -2,17 +2,20 @@ package com.lostinkaos.android.notesquirrel;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.view.View;
 import android.widget.ImageView;
 
+import java.util.List;
 
-public class ImageActivity extends ActionBarActivity {
+
+public class ImageActivity extends ActionBarActivity implements PointCollectorListener {
+
+    private PointCollector pointCollector = new PointCollector();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +24,8 @@ public class ImageActivity extends ActionBarActivity {
 
         addTouchListener();
         showPrompt();
+
+//        pointCollector.setListener(this);
     }
 
     private void showPrompt() {
@@ -45,20 +50,7 @@ public class ImageActivity extends ActionBarActivity {
     private void addTouchListener() {
         ImageView image = (ImageView) findViewById(R.id.touch_image);
 
-        image.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-
-                Float x = motionEvent.getX();
-                Float y = motionEvent.getY();
-
-                String message = String.format("Coordinates: (%.2f, %.2f)", x, y);
-
-                Log.d( MainActivity.DEBUGTAG, message);
-
-                return false;
-            }
-        });
+        image.setOnTouchListener(pointCollector);
     }
 
     @Override
@@ -81,5 +73,10 @@ public class ImageActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void pointsCollected(List<Point> points) {
+        Log.d(MainActivity.DEBUGTAG, "Points collected: " + points.size() );
     }
 }
