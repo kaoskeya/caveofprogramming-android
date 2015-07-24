@@ -1,6 +1,7 @@
 package com.lostinkaos.android.notesquirrel;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -21,6 +22,7 @@ public class MainActivity extends ActionBarActivity {
 
     public static final String DEBUGTAG = "NOTESQUIRREL";
     public static final String TEXTFILE = "notesquirrel.txt";
+    public static final String FILESAVED = "FileSaved";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +31,11 @@ public class MainActivity extends ActionBarActivity {
 
         addSaveButtonListener();
 
-        loadSavedFile();
+        SharedPreferences prefs = getPreferences(MODE_PRIVATE);
+        Boolean fileSaved = prefs.getBoolean(FILESAVED, false);
+        if( fileSaved ) {
+            loadSavedFile();
+        }
     }
 
     private void loadSavedFile() {
@@ -66,8 +72,13 @@ public class MainActivity extends ActionBarActivity {
 
                 try {
                     FileOutputStream fos = openFileOutput(TEXTFILE, Context.MODE_PRIVATE);
-                    fos.write( text.getBytes() );
+                    fos.write(text.getBytes());
                     fos.close();
+
+                    SharedPreferences prefs = getPreferences(MODE_PRIVATE);
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putBoolean(FILESAVED, true);
+                    editor.apply();
                 } catch (Exception e) {
                     Log.d(DEBUGTAG, "Unable to save file");
                 }
