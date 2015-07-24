@@ -1,9 +1,13 @@
 package com.lostinkaos.android.notesquirrel;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.ImageView;
 
 
 public class ImageActivity extends ActionBarActivity {
@@ -12,6 +16,27 @@ public class ImageActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image);
+
+        addTouchListener();
+    }
+
+    public void addTouchListener() {
+        ImageView image = (ImageView) findViewById(R.id.touch_image);
+
+        image.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+
+                Float x = motionEvent.getX();
+                Float y = motionEvent.getY();
+
+                String message = String.format("Coordinates: (%.2f, %.2f)", x, y);
+
+                Log.d( MainActivity.DEBUGTAG, message);
+
+                return false;
+            }
+        });
     }
 
     @Override
