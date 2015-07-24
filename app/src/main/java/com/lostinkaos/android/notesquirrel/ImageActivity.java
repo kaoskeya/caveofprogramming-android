@@ -1,5 +1,7 @@
 package com.lostinkaos.android.notesquirrel;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -18,9 +20,29 @@ public class ImageActivity extends ActionBarActivity {
         setContentView(R.layout.activity_image);
 
         addTouchListener();
+        showPrompt();
     }
 
-    public void addTouchListener() {
+    private void showPrompt() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+
+        builder.setTitle("Create Your Passpoint Sequence");
+        builder.setMessage("Touch four points on the image to set the passpoint sequence. You must click the same points in the future to gain access to your notes.");
+
+        AlertDialog dlg = builder.create();
+
+        dlg.show();
+
+    }
+
+    private void addTouchListener() {
         ImageView image = (ImageView) findViewById(R.id.touch_image);
 
         image.setOnTouchListener(new View.OnTouchListener() {
