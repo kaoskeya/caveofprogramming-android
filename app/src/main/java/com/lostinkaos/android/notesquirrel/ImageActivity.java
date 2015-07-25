@@ -26,7 +26,7 @@ public class ImageActivity extends ActionBarActivity implements PointCollectorLi
         addTouchListener();
         showPrompt();
 
-//        pointCollector.setListener(this);
+        pointCollector.setListener(this);
     }
 
     private void showPrompt() {
@@ -79,5 +79,7 @@ public class ImageActivity extends ActionBarActivity implements PointCollectorLi
     @Override
     public void pointsCollected(List<Point> points) {
         Log.d(MainActivity.DEBUGTAG, "Points collected: " + points.size() );
+
+        db.storePoints(points);
     }
 }

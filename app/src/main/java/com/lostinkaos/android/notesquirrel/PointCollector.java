@@ -36,8 +36,6 @@ public class PointCollector implements View.OnTouchListener {
             if( listener != null ) {
                 listener.pointsCollected(points);
                 points.clear();
-            } else {
-                Log.d(MainActivity.DEBUGTAG, "No Listener set!");
             }
         }
 
