@@ -16,6 +16,7 @@ import java.util.List;
 public class ImageActivity extends ActionBarActivity implements PointCollectorListener {
 
     private PointCollector pointCollector = new PointCollector();
+    private Database db = new Database(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
