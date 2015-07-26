@@ -3,6 +3,7 @@ package com.lostinkaos.android.notesquirrel;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.Point;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -77,15 +78,42 @@ public class ImageActivity extends ActionBarActivity implements PointCollectorLi
     }
 
     @Override
-    public void pointsCollected(List<Point> points) {
-        Log.d(MainActivity.DEBUGTAG, "Points collected: " + points.size());
+    public void pointsCollected(final List<Point> points) {
+//        Log.d(MainActivity.DEBUGTAG, "Points collected: " + points.size());
 
-        db.storePoints(points);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(getString(R.string.storing_data));
 
-        List<Point> list = db.getPoints();
+        final AlertDialog dlg = builder.create();
+        dlg.show();
 
-        for(Point point: list) {
-            Log.d(MainActivity.DEBUGTAG, String.format("Got Point (%d, %d)", point.x, point.y));
-        }
+        AsyncTask<Void, Void, Void> task = new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+                }
+
+                db.storePoints(points);
+                Log.d(MainActivity.DEBUGTAG, "points saved");
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                dlg.dismiss();
+            }
+        };
+
+        task.execute();
+
+//        List<Point> list = db.getPoints();
+
+//        for(Point point: list) {
+//            Log.d(MainActivity.DEBUGTAG, String.format("Got Point (%d, %d)", point.x, point.y));
+//        }
     }
 }
