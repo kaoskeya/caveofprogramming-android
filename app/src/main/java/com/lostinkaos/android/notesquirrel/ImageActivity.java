@@ -78,8 +78,14 @@ public class ImageActivity extends ActionBarActivity implements PointCollectorLi
 
     @Override
     public void pointsCollected(List<Point> points) {
-        Log.d(MainActivity.DEBUGTAG, "Points collected: " + points.size() );
+        Log.d(MainActivity.DEBUGTAG, "Points collected: " + points.size());
 
         db.storePoints(points);
+
+        List<Point> list = db.getPoints();
+
+        for(Point point: list) {
+            Log.d(MainActivity.DEBUGTAG, String.format("Got Point (%d, %d)", point.x, point.y));
+        }
     }
 }
