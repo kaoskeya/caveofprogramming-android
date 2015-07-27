@@ -13,6 +13,8 @@ import java.util.List;
  */
 public class PointCollector implements View.OnTouchListener {
 
+    public static final int NUM_POINTS = 4;
+
     private List<Point> points = new ArrayList<Point>();
     private PointCollectorListener listener;
 
@@ -32,13 +34,17 @@ public class PointCollector implements View.OnTouchListener {
 
         points.add(new Point(x, y));
 
-        if( points.size() == 4 ) {
+        if( points.size() == NUM_POINTS ) {
             if( listener != null ) {
                 listener.pointsCollected(points);
-                points.clear();
+//                points.clear();
             }
         }
 
         return false;
+    }
+
+    public void clear() {
+        points.clear();
     }
 }
