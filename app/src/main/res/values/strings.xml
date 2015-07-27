@@ -9,4 +9,5 @@
     <string name="title_activity_image">Passpoints Image</string>
     <string name="password_image">Password image</string>
     <string name="storing_data">Storing Data.</string>
+    <string name="lock">Lock</string>
 </resources>
