@@ -1,6 +1,7 @@
 package com.lostinkaos.android.notesquirrel;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -24,6 +25,7 @@ public class MainActivity extends ActionBarActivity {
     public static final String DEBUGTAG = "NOTESQUIRREL";
     public static final String TEXTFILE = "notesquirrel2.txt";
     public static final String FILESAVED = "FileSaved";
+    public static final String RESET_PASSPOINTS = "ResetPasspoints";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,10 +116,12 @@ public class MainActivity extends ActionBarActivity {
         //noinspection SimplifiableIfStatement
         switch (id) {
             case R.id.menu_passpoints_reset:
-                Toast.makeText(this, "Hello", Toast.LENGTH_LONG).show();
+                Intent i = new Intent(MainActivity.this, ImageActivity.class);
+                i.putExtra(RESET_PASSPOINTS, true);
+                startActivity(i);
                 return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-
-        return super.onOptionsItemSelected(item);
     }
 }

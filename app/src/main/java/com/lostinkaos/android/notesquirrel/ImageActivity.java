@@ -31,14 +31,22 @@ public class ImageActivity extends ActionBarActivity implements PointCollectorLi
 
         addTouchListener();
 
+        pointCollector.setListener(this);
+
+        Bundle extras = getIntent().getExtras();
+        if( extras != null ) {
+            Boolean resetPasspoints = extras.getBoolean(MainActivity.RESET_PASSPOINTS);
+            if( resetPasspoints ) {
+                
+            }
+        }
+
         SharedPreferences prefs = getPreferences(MODE_PRIVATE);
         Boolean passpointsSet = prefs.getBoolean(PASSWORD_SET, false);
 
         if( !passpointsSet ) {
             showSetPasspointsPrompt();
         }
-
-        pointCollector.setListener(this);
     }
 
     private void showSetPasspointsPrompt() {
