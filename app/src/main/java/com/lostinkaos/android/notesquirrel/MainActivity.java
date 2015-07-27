@@ -86,6 +86,15 @@ public class MainActivity extends ActionBarActivity {
                 }
             }
         });
+
+        Button lockBtn = (Button) findViewById( R.id.lock );
+
+        lockBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     @Override
