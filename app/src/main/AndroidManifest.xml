@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.lostinkaos.android.notesquirrel" >
 
+    <supports-screens android:largeScreens="true" android:resizeable="true" android:smallScreens="false" android:xlargeScreens="true" android:normalScreens="true" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
