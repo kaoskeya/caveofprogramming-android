@@ -3,6 +3,7 @@
     package="com.lostinkaos.android.notesquirrel" >
 
     <supports-screens android:largeScreens="true" android:resizeable="true" android:smallScreens="false" android:xlargeScreens="true" android:normalScreens="true" />
+    <uses-feature android:name="android.hardware.camera2" android:required="false" />
 
     <application
         android:allowBackup="true"
