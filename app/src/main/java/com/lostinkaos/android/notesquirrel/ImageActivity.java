@@ -33,15 +33,17 @@ public class ImageActivity extends ActionBarActivity implements PointCollectorLi
 
         pointCollector.setListener(this);
 
+        SharedPreferences prefs = getPreferences(MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+
         Bundle extras = getIntent().getExtras();
         if( extras != null ) {
             Boolean resetPasspoints = extras.getBoolean(MainActivity.RESET_PASSPOINTS);
             if( resetPasspoints ) {
-                
+                editor.putBoolean(PASSWORD_SET, false).commit();
             }
         }
 
-        SharedPreferences prefs = getPreferences(MODE_PRIVATE);
         Boolean passpointsSet = prefs.getBoolean(PASSWORD_SET, false);
 
         if( !passpointsSet ) {
