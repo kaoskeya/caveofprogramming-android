@@ -3,6 +3,7 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="menu_passpoints_reset">Reset Passpoints</string>
     <string name="edit_text_hint">Enter your text here.</string>
     <string name="save">Save</string>
     <string name="toast_cant_save">Unable to save note. Is there sufficient space?</string>

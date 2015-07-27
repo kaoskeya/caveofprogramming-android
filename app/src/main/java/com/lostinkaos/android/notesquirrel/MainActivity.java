@@ -112,8 +112,10 @@ public class MainActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (id) {
+            case R.id.menu_passpoints_reset:
+                Toast.makeText(this, "Hello", Toast.LENGTH_LONG).show();
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
