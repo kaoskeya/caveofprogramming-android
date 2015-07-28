@@ -7,11 +7,27 @@ public class Message {
     private String sender;
     private String title;
     private int id;
+    private Boolean read = false;
 
     public Message(int id, String sender, String title) {
         this.sender = sender;
         this.title = title;
         this.id = id;
+    }
+
+    public Message(int id, String sender, String title, Boolean read) {
+        this.sender = sender;
+        this.title = title;
+        this.id = id;
+        this.read = read;
+    }
+
+    public Boolean isRead() {
+        return read;
+    }
+
+    public void setRead(Boolean read) {
+        this.read = read;
     }
 
     public int getId() {

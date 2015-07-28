@@ -25,10 +25,10 @@ public class MainActivity extends ActionBarActivity {
         // Retrieve these messages from somewhere
         List<Message> messages = new ArrayList<Message>();
 
-        messages.add(new Message(0, "Bob Smith", "My cat has gone missing."));
-        messages.add(new Message(1, "Sue Blake", "Special Offer."));
-        messages.add(new Message(2, "Mike Peters", "Read any good books?"));
-        messages.add(new Message(3, "Sarah Rogers", "Is the canteen on fire?"));
+        messages.add(new Message(0, "Bob Smith", "My cat has gone missing.", true));
+        messages.add(new Message(1, "Sue Blake", "Special Offer.", false));
+        messages.add(new Message(2, "Mike Peters", "Read any good books?", false));
+        messages.add(new Message(3, "Sarah Rogers", "Is the canteen on fire?", true));
 
         MessageAdapter adapter = new MessageAdapter(this, messages);
 
