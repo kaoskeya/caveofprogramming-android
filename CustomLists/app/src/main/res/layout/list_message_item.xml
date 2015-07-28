@@ -3,6 +3,7 @@
     android:orientation="horizontal" android:layout_width="match_parent"
     style="@style/listbackground"
     android:layout_height="match_parent">
+
     <ImageView
         android:id="@+id/list_message_icon"
         android:src="@drawable/btn_radio_on_focused_holo_dark"
@@ -11,19 +12,24 @@
         android:layout_gravity="center_vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <TextView
             style="@style/title"
             android:id="@+id/list_message_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
         <TextView
             style="@style/subject"
             android:id="@+id/list_message_sender"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
     </LinearLayout>
+
 </LinearLayout>
