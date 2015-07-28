@@ -11,4 +11,6 @@
     <string name="password_image">Password image</string>
     <string name="storing_data">Storing Data.</string>
     <string name="lock">Lock</string>
+    <string name="replace_lock_image">Replace Lock Image</string>
+    <string name="menu_replace_image">Replace Image</string>
 </resources>

@@ -4,4 +4,6 @@
     tools:context="com.lostinkaos.android.notesquirrel.ImageActivity">
     <item android:id="@+id/menu_passpoints_reset" android:title="@string/menu_passpoints_reset"
         app:showAsAction="never" />
+    <item android:id="@+id/menu_replace_image" android:title="@string/menu_replace_image"
+        app:showAsAction="never" />
 </menu>
