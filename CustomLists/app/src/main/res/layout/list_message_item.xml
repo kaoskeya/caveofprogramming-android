@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal" android:layout_width="match_parent"
-    android:background="#000000"
+    style="@style/listbackground"
     android:layout_height="match_parent">
-
     <ImageView
         android:id="@+id/list_message_icon"
         android:src="@drawable/btn_radio_on_focused_holo_dark"
@@ -12,28 +11,19 @@
         android:layout_gravity="center_vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
         <TextView
+            style="@style/title"
             android:id="@+id/list_message_title"
-            android:textColor="#00FF00"
-            android:background="#000000"
-            android:textSize="16dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-
         <TextView
+            style="@style/subject"
             android:id="@+id/list_message_sender"
-            android:textColor="#00FF00"
-            android:background="#000000"
-            android:textSize="14dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-
     </LinearLayout>
-
 </LinearLayout>
