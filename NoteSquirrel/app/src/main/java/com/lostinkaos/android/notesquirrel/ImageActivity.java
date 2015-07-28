@@ -5,6 +5,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Point;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -42,12 +44,33 @@ public class ImageActivity extends ActionBarActivity implements PointCollectorLi
             if( resetPasspoints ) {
                 editor.putBoolean(PASSWORD_SET, false).commit();
             }
+            String newImage = extras.getString(MainActivity.NEW_IMAGE);
+            Log.d(MainActivity.DEBUGTAG, "New Image: " + newImage);
+            if( newImage != null ) {
+                setImage(newImage);
+            } else {
+                setImage(null);
+            }
+        } else {
+            setImage(null);
         }
 
         Boolean passpointsSet = prefs.getBoolean(PASSWORD_SET, false);
 
         if( !passpointsSet ) {
             showSetPasspointsPrompt();
+        }
+    }
+
+    private void setImage(String path) {
+        ImageView imageView = (ImageView) findViewById(R.id.touch_image);
+
+        if( path == null ) {
+            Drawable image = getResources().getDrawable(R.drawable.image_default);
+            imageView.setImageDrawable(image);
+        } else {
+            Log.d(MainActivity.DEBUGTAG, "Uri: " + Uri.parse(path) );
+            imageView.setImageURI(Uri.parse(path));
         }
     }
 
@@ -67,7 +90,6 @@ public class ImageActivity extends ActionBarActivity implements PointCollectorLi
         AlertDialog dlg = builder.create();
 
         dlg.show();
-
     }
 
     private void addTouchListener() {
@@ -148,7 +170,7 @@ public class ImageActivity extends ActionBarActivity implements PointCollectorLi
 
                 List<Point> savedPoints = db.getPoints();
 
-                Log.d(MainActivity.DEBUGTAG, "Locaded points: " + savedPoints.size());
+                Log.d(MainActivity.DEBUGTAG, "Located points: " + savedPoints.size());
 
                 if(savedPoints.size() != PointCollector.NUM_POINTS || touchedPoints.size() != PointCollector.NUM_POINTS) {
                     return false;

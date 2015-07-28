@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -31,8 +32,9 @@ public class MainActivity extends ActionBarActivity {
     public static final String TEXTFILE = "notesquirrel2.txt";
     public static final String FILESAVED = "FileSaved";
     public static final String RESET_PASSPOINTS = "ResetPasspoints";
+    public static final String NEW_IMAGE = "NEW_IMAGE";
 
-    private File image;
+    private Uri image;
     private static final int PHOTO_TAKEN_REQUEST = 0;
     private static final int BROWSE_GALLERY_REQUEST = 1;
 
@@ -85,10 +87,11 @@ public class MainActivity extends ActionBarActivity {
 
     private void takePhoto() {
         File picturesDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-        image = new File(picturesDirectory, "passpoints_image");
+        File file = new File(picturesDirectory, "passpoints_image");
+        image = Uri.fromFile(file);
 
         Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        i.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(image));
+        i.putExtra(MediaStore.EXTRA_OUTPUT, image);
         startActivityForResult(i, PHOTO_TAKEN_REQUEST);
     }
 
@@ -96,24 +99,42 @@ public class MainActivity extends ActionBarActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if( requestCode == BROWSE_GALLERY_REQUEST ) {
-            Toast.makeText(this, "Gallery result: " + data.getData(), Toast.LENGTH_LONG ).show();
+            String[] columns = {MediaStore.Images.Media.DATA};
+
+            Uri imageUri = data.getData();
+
+            Cursor cursor = getContentResolver().query(imageUri, columns, null, null, null);
+
+            cursor.moveToFirst();
+
+            int columnIndex = cursor.getColumnIndex(columns[0]);
+            String imagePath = cursor.getString( columnIndex );
+
+            cursor.close();
+
+            image = Uri.parse(imagePath);
         }
 
         if( requestCode == PHOTO_TAKEN_REQUEST ) {
             if( image == null ) {
                 Toast.makeText(this, "Unable to display image", Toast.LENGTH_LONG).show();
-                Log.d(DEBUGTAG, "Photo: " + image.getPath());
             }
         }
 
-        resetPasspoints();
+        Log.d(DEBUGTAG, "Photo: " + image.getPath());
+
+        resetPasspoints(image);
 
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    private void resetPasspoints() {
+    private void resetPasspoints(Uri imagePath) {
         Intent i = new Intent(MainActivity.this, ImageActivity.class);
         i.putExtra(RESET_PASSPOINTS, true);
+        if( imagePath != null ) {
+            String path = imagePath.getPath();
+            i.putExtra(NEW_IMAGE, path);
+        }
         startActivity(i);
     }
 
@@ -193,7 +214,7 @@ public class MainActivity extends ActionBarActivity {
         //noinspection SimplifiableIfStatement
         switch (id) {
             case R.id.menu_passpoints_reset:
-                resetPasspoints();
+                resetPasspoints(null);
                 return true;
             case R.id.menu_replace_image:
                 replaceImage();

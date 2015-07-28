@@ -4,6 +4,7 @@
 
     <supports-screens android:largeScreens="true" android:resizeable="true" android:smallScreens="false" android:xlargeScreens="true" android:normalScreens="true" />
     <uses-feature android:name="android.hardware.camera2" android:required="false" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
