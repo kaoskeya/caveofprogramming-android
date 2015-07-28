@@ -6,6 +6,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -21,7 +22,16 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private void setListListener() {
+
+        String[] values = getResources().getStringArray(R.array.list_options);
+
+        values[0] = "Zeus";
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, values);
+
         ListView list = (ListView) findViewById(R.id.list);
+
+        list.setAdapter(adapter);
 
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -29,6 +39,7 @@ public class MainActivity extends ActionBarActivity {
                 Toast.makeText(MainActivity.this, "Pos: " + pos + "; value: " + adapter.getItemAtPosition(pos), Toast.LENGTH_LONG).show();
             }
         });
+
     }
 
     @Override
