@@ -6,6 +6,14 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.JSONTokener;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -21,32 +29,70 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        new AsyncTask<Void, Void, Void>() {
+        Button button = (Button) findViewById(R.id.button);
+
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
-            protected Void doInBackground(Void... voids) {
-                try {
-                    downloadHTML();
-                } catch (IOException e) {
-                    Log.d("CooLog", e.toString());
-                }
-                return null;
+            public void onClick(View view) {
+
+                new AsyncTask<Void, Void, String>() {
+                    @Override
+                    protected String doInBackground(Void... voids) {
+                        try {
+                            return downloadHTML();
+                        } catch (IOException e) {
+                            Log.d("CooLog", e.toString());
+                        }
+
+                        return "Can't reach server";
+                    }
+
+                    @Override
+                    protected void onPostExecute(String s) {
+                        TextView textView = (TextView) findViewById(R.id.text_view);
+                        textView.setText("");
+
+                        try {
+                            JSONArray users = (JSONArray) new JSONTokener(s).nextValue();
+                            for(int i=0; i<users.length(); i++ ) {
+                                JSONObject user = (JSONObject) users.get(i);
+                                textView.append( user.get("name").toString() + "\n" );
+                            }
+                        } catch (JSONException e) {
+                            Log.d("CooLog", e.toString());
+                            e.printStackTrace();
+                        }
+
+                        super.onPostExecute(s);
+                    }
+                }.execute();
+
             }
-        }.execute();
+        });
 
     }
 
-    private void downloadHTML() throws IOException {
-        URL url = new URL("https://www.lostinkaos.com");
+    private String downloadHTML() throws IOException {
+        URL url = new URL("http://jsonplaceholder.typicode.com/users");
 
         InputStream is = url.openStream();
         InputStreamReader isr = new InputStreamReader(is);
         BufferedReader br = new BufferedReader(isr);
 
         String line = null;
+        String lines = "";
+
 
         while((line = br.readLine()) != null) {
-            Log.d("CooLog", line);
+            lines += line;
+//            Log.d("CooLog", line);
         }
+
+        br.close();
+        isr.close();
+        is.close();
+
+        return lines;
     }
 
     @Override
