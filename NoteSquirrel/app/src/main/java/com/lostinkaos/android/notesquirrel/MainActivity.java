@@ -167,23 +167,7 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View view) {
 
-                EditText editText = (EditText) findViewById( R.id.text );
-
-                String text = editText.getText().toString();
-
-                try {
-                    FileOutputStream fos = openFileOutput(TEXTFILE, Context.MODE_PRIVATE);
-                    fos.write(text.getBytes());
-                    fos.close();
-
-                    SharedPreferences prefs = getPreferences(MODE_PRIVATE);
-                    SharedPreferences.Editor editor = prefs.edit();
-                    editor.putBoolean(FILESAVED, true);
-                    editor.apply();
-                } catch (Exception e) {
-                    Toast.makeText(MainActivity.this, getString(R.string.toast_cant_save), Toast.LENGTH_LONG).show();
-                    Log.d(DEBUGTAG, "Unable to save file");
-                }
+                saveText();
             }
         });
 
@@ -195,6 +179,33 @@ public class MainActivity extends ActionBarActivity {
                 finish();
             }
         });
+    }
+
+    private void saveText() {
+        EditText editText = (EditText) findViewById( R.id.text );
+
+        String text = editText.getText().toString();
+
+        try {
+            FileOutputStream fos = openFileOutput(TEXTFILE, Context.MODE_PRIVATE);
+            fos.write(text.getBytes());
+            fos.close();
+
+            SharedPreferences prefs = getPreferences(MODE_PRIVATE);
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putBoolean(FILESAVED, true);
+            editor.apply();
+        } catch (Exception e) {
+            Toast.makeText(MainActivity.this, getString(R.string.toast_cant_save), Toast.LENGTH_LONG).show();
+            Log.d(DEBUGTAG, "Unable to save file");
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        saveText();
     }
 
     @Override
