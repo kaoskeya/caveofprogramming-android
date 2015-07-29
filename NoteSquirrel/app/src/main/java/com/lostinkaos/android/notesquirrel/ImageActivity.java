@@ -31,6 +31,13 @@ public class ImageActivity extends ActionBarActivity implements PointCollectorLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image);
 
+        android.support.v7.app.ActionBar bar = getSupportActionBar();
+
+        if( bar != null ) {
+            bar.setDisplayShowHomeEnabled(false);
+            bar.setDisplayShowTitleEnabled(false);
+        }
+
         addTouchListener();
 
         pointCollector.setListener(this);
@@ -69,7 +76,7 @@ public class ImageActivity extends ActionBarActivity implements PointCollectorLi
             Drawable image = getResources().getDrawable(R.drawable.image_default);
             imageView.setImageDrawable(image);
         } else {
-            Log.d(MainActivity.DEBUGTAG, "Uri: " + Uri.parse(path) );
+            Log.d(MainActivity.DEBUGTAG, "Uri: " + Uri.parse(path));
             imageView.setImageURI(Uri.parse(path));
         }
     }
