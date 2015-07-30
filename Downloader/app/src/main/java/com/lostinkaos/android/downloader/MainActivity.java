@@ -70,6 +70,32 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
+        sendDataToServer();
+    }
+
+    private void sendDataToServer() {
+        JSONObject root = new JSONObject();
+
+        try {
+            root.put("user", "john");
+            root.put("password", "yolo");
+
+            JSONArray animals = new JSONArray();
+            animals.put("Cat");
+            animals.put("Dog");
+            animals.put("Ant");
+
+            root.put("animals", animals);
+
+
+            TextView textView2 = (TextView) findViewById(R.id.text_view2);
+            textView2.setText(root.toString(2));
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
     }
 
     private String downloadHTML() throws IOException {
