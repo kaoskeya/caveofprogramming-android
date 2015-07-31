@@ -18,7 +18,7 @@ public class CourseListFragment extends ListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ArrayAdapter<Course> adapter = new ArrayAdapter<Course>(getActivity(), android.R.layout.simple_list_item_1, courses);
+        ArrayAdapter<Course> adapter = new ArrayAdapter<Course>(getActivity(), R.layout.course_list_item, courses);
 
         setListAdapter(adapter);
     }
