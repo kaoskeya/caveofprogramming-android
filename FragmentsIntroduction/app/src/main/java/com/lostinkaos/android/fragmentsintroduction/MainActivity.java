@@ -4,13 +4,34 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 
 public class MainActivity extends AppCompatActivity {
+
+    private CourseList courses = new CourseList();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        CourseListFragment courseListFragment = (CourseListFragment) getFragmentManager().findFragmentById(R.id.list);
+
+        ArrayAdapter<Course> adapter = new ArrayAdapter<Course>(this, R.layout.course_list_item, courses);
+
+        courseListFragment.setListAdapter(adapter);
+
+        final ProductFragment productFragment = (ProductFragment) getFragmentManager().findFragmentById(R.id.product);
+
+        productFragment.setCourse(courses.get(1));
+
+        courseListFragment.setOnCourseItemClickListener(new CourseListFragment.OnCourseItemClickListener() {
+            @Override
+            public void onCourseItemClicked(int position) {
+                productFragment.setCourse(courses.get(position));
+            }
+        });
+
     }
 
     @Override
@@ -34,4 +55,5 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 }

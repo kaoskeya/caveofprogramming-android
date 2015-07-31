@@ -39,15 +39,22 @@ public class ProductFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.product_fragment, container, false);
 
+        return view;
+    }
+
+    public void setCourse(Course course) {
+
+        View view = getView();
+
         ImageView imageView = (ImageView) view.findViewById(R.id.image);
         TextView title = (TextView) view.findViewById(R.id.title);
+        TextView description = (TextView) view.findViewById(R.id.description);
 
-        Drawable icon = getResources().getDrawable(R.drawable.one);
+        Drawable icon = getResources().getDrawable(course.getImageId());
 
         imageView.setImageDrawable(icon);
-        title.setText("Open SQL Editor.");
-
-        return view;
+        title.setText(course.getTitle());
+        description.setText(course.getDescription());
     }
 
 }
