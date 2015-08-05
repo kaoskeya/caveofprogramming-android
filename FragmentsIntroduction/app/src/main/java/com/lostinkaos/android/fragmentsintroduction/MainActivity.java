@@ -1,7 +1,9 @@
 package com.lostinkaos.android.fragmentsintroduction;
 
-import android.support.v7.app.AppCompatActivity;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
@@ -21,14 +23,17 @@ public class MainActivity extends AppCompatActivity {
 
         courseListFragment.setListAdapter(adapter);
 
-        final ProductFragment productFragment = (ProductFragment) getFragmentManager().findFragmentById(R.id.product);
-
-        productFragment.setCourse(courses.get(1));
-
         courseListFragment.setOnCourseItemClickListener(new CourseListFragment.OnCourseItemClickListener() {
             @Override
             public void onCourseItemClicked(int position) {
-                productFragment.setCourse(courses.get(position));
+                Log.d("CooLog", "Course " + position);
+                ProductFragment productFragment = new ProductFragment(courses.get(position));
+
+                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+
+                fragmentTransaction.replace(R.id.list, productFragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
             }
         });
 
